@@ -1,0 +1,55 @@
+body, html, #root {
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.reports-container {
+  width: 600px; 
+  height: 100%;
+  margin: 0 auto;
+  background-color: #F8F9FA;
+}
+.reports-header {
+  display: flex;
+  height: fit-content;
+  padding: 40px;
+  justify-content: space-evenly;
+  background-color: #F8F9FA;
+  border-bottom: 1px solid #cbd3da;
+}
+.reports-photo,
+.reports-info {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+}
+.photo {
+  width: 200px;
+  height: auto;
+  margin-bottom: 23px;
+}
+.star select {
+  width: 100%;
+  height: 30px;
+  text-align: center;
+}
+.reports-info input,
+.reports-info textarea {
+  margin-bottom: 20px;
+}
+.reports-info input {
+  height: 30px;
+}
+.reports-info textarea {
+  height: 100px;
+  /* 크기 조정 막기 */
+  resize: none;
+}
+.reports-info textarea::placeholder {
+  text-align: center;
+}
+.reports-info button {
+  height: 30px;
+}

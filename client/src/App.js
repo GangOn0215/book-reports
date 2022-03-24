@@ -1,25 +1,37 @@
 import "./App.css";
 import axios from "axios";
-import { useEffect } from "react";
+import React, {useEffect, useState, useRef} from "react";
+import ReportsHeader from "./Component/ReportsHeader";
 
 function App() {
-  const callTest = async () => {
-    const resData = await axios.get("/test");
-    console.log(resData.data.test);
-  };
+  const [data, setData] = useState([]);
+  const dataID = useRef(0);
 
   const callApi = async () => {
-    axios.get("/api").then((res) => {
-      console.log(res.data.api);
+    const getData = await axios.get("/api/rest/book").then((res) => res.data.api);
+
+    const initData = getData.map((item) => {
+      return {
+        Author: item.email,
+        comment: item.body,
+        create_date: new Date().getTime(),
+        id: dataID.current++
+      }
     });
+
+    console.log(initData);
   };
 
   useEffect(() => {
-    callTest();
     callApi();
   }, []);
 
-  return <div className="App"></div>;
+  return (
+    <div className="reports-container">
+      <ReportsHeader />
+      <section className="reports-lists"></section>
+    </div>
+  );
 }
 
 export default App;
