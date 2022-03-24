@@ -1,0 +1,21 @@
+{
+  "name": "a03-book-reports-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "cd server && npx nodemon server",
+    "client": "cd client && npm start",
+    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "concurrently": "^7.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "http-proxy-middleware": "^2.0.4"
+  }
+}
