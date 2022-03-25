@@ -59,6 +59,7 @@ body, html, #root {
   margin-bottom: 20px;
 }
 .reports-item .info {
+  padding: 10px 0px;
   border-bottom: 1px solid black;
 }
 .reports-item .info .create-at {
@@ -66,4 +67,11 @@ body, html, #root {
 }
 .reports-item .content {
   padding: 5px 0px;
+}
+.reports-item textarea {
+  width: 100%;
+  resize: none;
+  height: 50px;
+  margin: 20px 0px;
+  box-sizing: border-box;
 }

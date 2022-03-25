@@ -1,31 +1,33 @@
 import { useRef, useState } from "react";
 
-const ReportsHeader = ({onCreate}) => {
+const ReportsHeader = ({ onCreate }) => {
+  // 여러개의 input 값을 객체로 만들어 관리하는 코드
   const [reportsData, setReportsData] = useState({
     author: "",
     comment: "",
     star: 1,
   });
 
+  // input Element 들을 관리하기 위한 useRef
   const inputAuthor = useRef();
   const inputComment = useRef();
-  const inputStar = useRef();
 
+  // onChange 이벤트가 발생될때 마다 실행하여 setReportsData 함수가 호출되는 함수
   const handleChange = (e) => {
     setReportsData({
       ...reportsData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = () => {
-    if(reportsData.author.length < 3) {
+    if (reportsData.author.length < 3) {
       inputAuthor.current.focus();
 
       return;
-    } 
-    
-    if(reportsData.comment.length < 5) {
+    }
+
+    if (reportsData.comment.length < 5) {
       inputComment.current.focus();
 
       return;
@@ -33,10 +35,11 @@ const ReportsHeader = ({onCreate}) => {
 
     onCreate(reportsData.author, reportsData.comment, reportsData.star);
 
+    // onCreate를 호출하고 난 뒤 input 영역을 초기화 해주고 있습니다.
     setReportsData({
       author: "",
       comment: "",
-      star: 1
+      star: 1,
     });
   };
 
@@ -49,12 +52,7 @@ const ReportsHeader = ({onCreate}) => {
           alt="oho"
         />
         <div className="star">
-          <select 
-            ref={inputStar}
-            name="star" 
-            value={reportsData.star} 
-            onChange={handleChange}
-          >
+          <select name="star" value={reportsData.star} onChange={handleChange}>
             <option value={1}>1</option>
             <option value={2}>2</option>
             <option value={3}>3</option>
