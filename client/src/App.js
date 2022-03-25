@@ -2,6 +2,7 @@ import "./App.css";
 import axios from "axios";
 import React, {useEffect, useState, useRef} from "react";
 import ReportsHeader from "./Component/ReportsHeader";
+import ReportsList from "./Component/ReportsList";
 
 function App() {
   const [data, setData] = useState([]);
@@ -12,24 +13,24 @@ function App() {
 
     const initData = getData.map((item) => {
       return {
-        Author: item.email,
+        author: item.email,
         comment: item.body,
         create_date: new Date().getTime(),
         id: dataID.current++
       }
     });
 
-    console.log(initData);
+    setData(initData);
   };
 
   useEffect(() => {
     callApi();
   }, []);
-
+  
   return (
     <div className="reports-container">
       <ReportsHeader />
-      <section className="reports-lists"></section>
+      <ReportsList ReportList={data}/>
     </div>
   );
 }

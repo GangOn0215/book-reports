@@ -53,3 +53,17 @@ body, html, #root {
 .reports-info button {
   height: 30px;
 }
+
+.reports-item {
+  padding: 10px;
+  margin-bottom: 20px;
+}
+.reports-item .info {
+  border-bottom: 1px solid black;
+}
+.reports-item .info .create-at {
+  font-size: 0.9em;
+}
+.reports-item .content {
+  padding: 5px 0px;
+}

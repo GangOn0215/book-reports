@@ -1,9 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import ReportsItems from "./ReportsItem";
 
-const ReportsList = () => {
-  
+const ReportsList = ({ReportList}) => {
+
   return (
-    <section className="reports-lists"></section>
+    <section className="reports-lists">
+    {
+      ReportList.map((item) => {
+        return (
+          <ReportsItems key={item.id} {...item}/>
+        )
+      })
+    }  
+    </section>
   )
 }
 
