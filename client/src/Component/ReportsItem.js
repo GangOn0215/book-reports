@@ -1,6 +1,13 @@
 import React, { useState, useRef } from "react";
 
-const ReportsItems = ({ onEdit, author, comment, created_date, id }) => {
+const ReportsItems = ({
+  onEdit,
+  onDelete,
+  author,
+  comment,
+  created_date,
+  id,
+}) => {
   // textarea element를 관리하기 위한 useRef
   const inputComment = useRef();
 
@@ -43,6 +50,12 @@ const ReportsItems = ({ onEdit, author, comment, created_date, id }) => {
     }
   };
 
+  const handelDeleteSubmit = () => {
+    if (window.confirm(`real delete? ${id}`)) {
+      onDelete(id);
+    }
+  };
+
   return (
     <div className="reports-item">
       <div className="info">
@@ -70,7 +83,7 @@ const ReportsItems = ({ onEdit, author, comment, created_date, id }) => {
           </div>
 
           <button onClick={toggleIsEdit}>Edit</button>
-          <button>Delete</button>
+          <button onClick={handelDeleteSubmit}>Delete</button>
         </>
       )}
     </div>

@@ -52,10 +52,16 @@ function App() {
     setData(newReportList);
   };
 
+  const onDelete = (targetID) => {
+    const newReportList = data.filter((item) => item.id !== targetID);
+
+    setData(newReportList);
+  };
+
   return (
     <div className="reports-container">
       <ReportsHeader onCreate={onCreate} />
-      <ReportsList onEdit={onEdit} ReportList={data} />
+      <ReportsList onEdit={onEdit} onDelete={onDelete} ReportList={data} />
     </div>
   );
 }
