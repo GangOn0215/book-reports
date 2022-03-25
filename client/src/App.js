@@ -15,7 +15,8 @@ function App() {
       return {
         author: item.email,
         comment: item.body,
-        create_date: new Date().getTime(),
+        star: Math.floor(Math.random() * 5) + 1,
+        created_date: new Date().getTime(),
         id: dataID.current++
       }
     });
@@ -27,9 +28,23 @@ function App() {
     callApi();
   }, []);
   
+  const onCreate = (newAuthor, newComment, newStar) => {
+    const create_date = new Date().getTime();
+    
+    const newReportList = {
+      author: newAuthor,
+      comment: newComment,
+      star: newStar,
+      created_date: create_date,
+      id: dataID.current++
+    };
+
+    setData([newReportList, ...data]);
+  }
+
   return (
     <div className="reports-container">
-      <ReportsHeader />
+      <ReportsHeader onCreate={onCreate}/>
       <ReportsList ReportList={data}/>
     </div>
   );

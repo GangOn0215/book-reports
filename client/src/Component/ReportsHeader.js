@@ -1,11 +1,43 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
-const ReportsHeader = () => {
-  const [author, setAuthor] = useState("");
-  const [comment, setComment] = useState("");
+const ReportsHeader = ({onCreate}) => {
+  const [reportsData, setReportsData] = useState({
+    author: "",
+    comment: "",
+    star: 1,
+  });
+
+  const inputAuthor = useRef();
+  const inputComment = useRef();
+  const inputStar = useRef();
+
+  const handleChange = (e) => {
+    setReportsData({
+      ...reportsData,
+      [e.target.name]: e.target.value
+    });
+  };
 
   const handleSubmit = () => {
-    console.log(author, comment);
+    if(reportsData.author.length < 3) {
+      inputAuthor.current.focus();
+
+      return;
+    } 
+    
+    if(reportsData.comment.length < 5) {
+      inputComment.current.focus();
+
+      return;
+    }
+
+    onCreate(reportsData.author, reportsData.comment, reportsData.star);
+
+    setReportsData({
+      author: "",
+      comment: "",
+      star: 1
+    });
   };
 
   return (
@@ -17,7 +49,12 @@ const ReportsHeader = () => {
           alt="oho"
         />
         <div className="star">
-          <select>
+          <select 
+            ref={inputStar}
+            name="star" 
+            value={reportsData.star} 
+            onChange={handleChange}
+          >
             <option value={1}>1</option>
             <option value={2}>2</option>
             <option value={3}>3</option>
@@ -28,13 +65,17 @@ const ReportsHeader = () => {
       </article>
       <article className="reports-info">
         <input
-          value={author}
-          onChange={(e) => { setAuthor(e.target.value); }}
+          ref={inputAuthor}
+          name="author"
+          value={reportsData.author}
+          onChange={handleChange}
           placeholder="Auchor"
         />
         <textarea
-          value={comment}
-          onChange={(e) => { setComment(e.target.value); }}
+          ref={inputComment}
+          name="comment"
+          value={reportsData.comment}
+          onChange={handleChange}
           placeholder="Comment"
         />
         <button onClick={handleSubmit}>Submit</button>
