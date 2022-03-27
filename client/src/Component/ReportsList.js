@@ -6,12 +6,7 @@ const ReportsList = ({ onEdit, onDelete, ReportList }) => {
     <section className="reports-lists">
       {ReportList.map((item) => {
         return (
-          <ReportsItems
-            key={item.id}
-            {...item}
-            onEdit={onEdit}
-            onDelete={onDelete}
-          />
+          <ReportsItems key={item.id} {...item} onEdit={onEdit} onDelete={onDelete} />
         );
       })}
     </section>
