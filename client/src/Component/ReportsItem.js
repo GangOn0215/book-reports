@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 const ReportsItems = ({
   onEdit,
@@ -8,6 +8,10 @@ const ReportsItems = ({
   created_date,
   id,
 }) => {
+  useEffect(() => {
+    console.log(`rerender item ${id}`);
+  });
+
   // textarea element를 관리하기 위한 useRef
   const inputComment = useRef();
 
@@ -90,4 +94,4 @@ const ReportsItems = ({
   );
 };
 
-export default ReportsItems;
+export default React.memo(ReportsItems);
