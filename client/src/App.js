@@ -1,12 +1,43 @@
 import "./App.css";
 import axios from "axios";
-import React, { useState, useRef, useEffect, useMemo, useCallback } from "react";
+import React, { useRef, useEffect, useMemo, useCallback, useReducer } from "react";
 import ReportsHeader from "./Component/ReportsHeader";
 import ReportsList from "./Component/ReportsList";
 // import DingdongDitch from "./Component/DingdongDitch";
 
+const reducer = (state, action) => {
+  switch(action.type) {
+    case "INIT":
+      return action.initData;
+    case "CREATE":
+      const created_date = new Date().getTime();
+
+      const newItem = {
+        ...action.data,
+        created_date
+      }
+
+      return [newItem, ...state];
+    case "UPDATE":
+      // targetID, newComment
+      return state.map((item) => item.id === action.data.targetID ? {...item, comment: action.data.newComment} : item);
+    case "DELETE":
+      return state.filter((item) => item.id !== action.data.targetID);
+    default:
+      return state;
+  }
+}
+
 function App() {
-  const [data, setData] = useState([]);
+  /*
+   * useState 말고 useReducer을 써보도록 하겠습니다.
+   * useReducer을 사용하는 이유는 상태 변화 코드를 Component 내에서 모두 처리하면 상당히 무거워 지는 관계로
+   * Component 밖에서 따로 빼두고 처리하는것이 용이합니다. 
+   * 
+   */
+
+  const [data, dispatch] = useReducer(reducer, []);
+  // const [data, setData] = useState([]);
   const dataID = useRef(0);
 
   const callApi = async () => {
@@ -24,45 +55,26 @@ function App() {
       };
     });
 
-    setData(initData);
+    dispatch({type: "INIT", initData})
+    // setData(initData);
   };
 
   useEffect(() => {
     callApi();
   }, []);
 
-  const onCreate = useCallback((newAuthor, newComment, newStar) => {
-    const create_date = new Date().getTime();
+  const onCreate = useCallback((author, comment, star) => {
+    dispatch({type: "CREATE", data: {author, comment, star, id: dataID.current}});
 
-    const newReportList = {
-      author: newAuthor,
-      comment: newComment,
-      star: newStar,
-      created_date: create_date,
-      id: dataID.current++,
-    };
-
-    /* 
-      기존에 하던 방식대로 setData([newReportList, ...data]); 이러한 형태로
-      setData를 하면 데이터가 이상하게 변할것입니다.
-      
-      이유는 아래 dependency(의존성) 에 빈 배열이 있기때문에 data는 빈 배열로 됩니다.
-
-      그래서 함수로 반환하여 데이터를 주입시켜줍니다.
-    */
-    setData((data) => setData([newReportList, ...data]));
+    dataID.current++;
   }, []);
 
   const onEdit = useCallback((targetID, newComment) => {
-    setData((data) => 
-      data.map((item) => targetID === item.id ? {...item, comment: newComment} : item)
-    );
+    dispatch({type: "UPDATE", data: {targetID, newComment}});
   }, []);
 
   const onDelete = useCallback((targetID) => {
-    setData((data) => 
-      data.filter((item) => targetID !== item.id)
-    );
+    dispatch({type: "DELETE", data: {targetID}});
   }, []);
 
   /** 
