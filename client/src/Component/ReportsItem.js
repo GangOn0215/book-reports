@@ -1,13 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
+import { ReportsDispatchContext } from "../App";
 
-const ReportsItems = ({
-  onEdit,
-  onDelete,
-  author,
-  comment,
-  created_date,
-  id,
-}) => {
+// onEdit, onDelete 함수를 useContext를 사용하여 함수를 가져옵니다.
+const ReportsItems = ({ author, comment, created_date, id }) => {
+  const { onEdit, onDelete } = useContext(ReportsDispatchContext);
+
   useEffect(() => {
     console.log(`rerender item ${id}`);
   });
